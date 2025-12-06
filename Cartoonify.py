@@ -13,7 +13,23 @@ def image_input():
         else:
             print("Prcoessing image...")
 
-        c.imshow('Image', img)
+        h,w = img.shape()
+        
+        gray = c.cvtColor(img, c.COLOR_BGR2GRAY)
+        gray = c.medianBlur(img, 9)
+        max_value = 255 #specifies maximum intensity
+        block_size = 7 #specifies size of local neighborhood
+        offset_C = 2 #used to bring balance
+
+        adaptive = c.adaptiveThreshold(gray, max_value, cv.ADAPTIVE_THRESH_MEAN_C, c.THRESH_BINARY, block_size, offset_C)
+        #adaptive threshold mean handles varying illumination
+        #thresh binary converts pixel intensity>max_value to white and remaining to black
+
+        fil = c.bilateralFilter(gray, 12, 250, 250)
+
+        cartoon = c.bitwise_and(adaptive, adaptive, fil)
+
+        c.imshow('filter', cartoon)
         c.waitKey(0)
         c.destroyAllWindows()
         break
