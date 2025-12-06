@@ -20,7 +20,7 @@ def image_input():
         block_size = 7 #specifies size of local neighborhood
         offset_C = 2 #used to bring balance
 
-        adaptive = c.adaptiveThreshold(gray, max_value, cv.ADAPTIVE_THRESH_MEAN_C, c.THRESH_BINARY, block_size, offset_C)
+        adaptive = c.adaptiveThreshold(gray, max_value, c.ADAPTIVE_THRESH_MEAN_C, c.THRESH_BINARY, block_size, offset_C)
         #adaptive threshold mean handles varying illumination
         #thresh binary converts pixel intensity>max_value to white and remaining to black
 
