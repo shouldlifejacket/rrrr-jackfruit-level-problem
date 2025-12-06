@@ -13,10 +13,9 @@ def image_input():
         else:
             print("Prcoessing image...")
 
-        h,w = img.shape()
         
         gray = c.cvtColor(img, c.COLOR_BGR2GRAY)
-        gray = c.medianBlur(img, 9)
+        gray = c.medianBlur(gray, 9)
         max_value = 255 #specifies maximum intensity
         block_size = 7 #specifies size of local neighborhood
         offset_C = 2 #used to bring balance
@@ -27,7 +26,7 @@ def image_input():
 
         fil = c.bilateralFilter(gray, 12, 250, 250)
 
-        cartoon = c.bitwise_and(adaptive, adaptive, fil)
+        cartoon = c.bitwise_and(adaptive, adaptive, mask = fil)
 
         c.imshow('filter', cartoon)
         c.waitKey(0)
