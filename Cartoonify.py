@@ -16,6 +16,7 @@ def image_input():
         c.imshow('Image', img)
         c.waitKey(0)
         c.destroyAllWindows()
+        break
 
 def video():
     consent = input("Do you give permission to access your camera Y/n? : ")
@@ -45,6 +46,8 @@ def video():
         
         cap.release()
         c.destroyAllWindows()
+        print("press q to exit")
+        break
 
 choice = input('Would you like to edit an image[press A] or something from yoour webcam[Press B]: ')
 if choice == 'A' or choice == 'a':
