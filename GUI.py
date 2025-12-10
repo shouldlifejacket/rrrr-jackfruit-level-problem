@@ -1,7 +1,10 @@
-import wx
+
 import os
 import cv2
-
+import wx
+import test as t
+import asciiTest as aT
+print('Test 1')
 def cv_to_wx_bitmap(cv_img, max_size=(400, 300)):
     if cv_img is None:
         return wx.Bitmap(max_size[0], max_size[1])
@@ -28,6 +31,7 @@ def fit_image(img, max_w=400, max_h=300):
 
 
 class MainFrame(wx.Frame):
+    print('Test 2')
     def __init__(self, parent=None):
         super().__init__(parent, title='Image Processor', size=(1000, 650))
 
@@ -77,7 +81,7 @@ class MainFrame(wx.Frame):
         ctrl_sizer.Add(wx.StaticText(ctrl_panel, label='Effect:'), 0, wx.LEFT | wx.TOP, 6)
 
         effect = [
-            'None'
+            'None','Cartoonify','Ascii'
         ]
         self.effect_choice = wx.Choice(ctrl_panel, choices=effect)
         self.effect_choice.SetSelection(0)
@@ -106,7 +110,7 @@ class MainFrame(wx.Frame):
         main_sizer.Add(ctrl_panel, 1, wx.EXPAND | wx.ALL, 8)
         panel.SetSizer(main_sizer)
 
-        # Bind events
+        #Bind events
         open_btn.Bind(wx.EVT_BUTTON, self.on_open)
         save_btn.Bind(wx.EVT_BUTTON, self.on_save)
         reset_btn.Bind(wx.EVT_BUTTON, self.on_reset)
@@ -188,9 +192,35 @@ class MainFrame(wx.Frame):
 
         img = self.orig_image.copy()
         intensity = self.intensity_slider.GetValue() / 50.0
-        f = self.filter_choice.GetStringSelection()
+        f = self.effect_choice.GetStringSelection()
 
+        try:
+            if f== 'None':
+                result = img
+            elif f == "Cartoonify":
+                result = t.cartoonify(img,intensity)
+
+            elif f == 'Ascii':
+                result=aT.image_to_ascii(img)
+
+            else:
+                result = img
+
+            # Ensure result is BGR 3-channel
+            if len(result.shape) == 2:
+                result = cv2.cvtColor(result, cv2.COLOR_GRAY2BGR)
+
+            self.edited_image = result
+            self.update_previews()
+        except Exception as e:
+            wx.MessageBox(f'Error applying filter: {e}', 'Error')
         
+
+
+       
+
+
+
 
 if __name__ == '__main__':
     app = wx.App(False)
