@@ -4,6 +4,7 @@ import cv2
 import wx
 import test as t
 import asciiTest as aT
+import Filter_R as JD
 print('Test 1')
 def cv_to_wx_bitmap(cv_img, max_size=(400, 300)):
     if cv_img is None:
@@ -81,7 +82,7 @@ class MainFrame(wx.Frame):
         ctrl_sizer.Add(wx.StaticText(ctrl_panel, label='Effect:'), 0, wx.LEFT | wx.TOP, 6)
 
         effect = [
-            'None','Cartoonify','Ascii'
+            'None','Negative','Cartoonify','Ascii','Sepia','Oil Paint'
         ]
         self.effect_choice = wx.Choice(ctrl_panel, choices=effect)
         self.effect_choice.SetSelection(0)
@@ -202,6 +203,12 @@ class MainFrame(wx.Frame):
 
             elif f == 'Ascii':
                 result=aT.image_to_ascii(img)
+            elif f == 'Negative':
+                result=JD.negative_filter(img)
+            elif f== 'Oil Paint':
+                result=JD.oil_paint_effect_fast(img)
+            elif f == 'Sepia':
+                result=JD.sepia_filter(img)
 
             else:
                 result = img
