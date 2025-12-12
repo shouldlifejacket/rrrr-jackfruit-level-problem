@@ -25,7 +25,7 @@ def sepia_filter(img_path, output_path):
     sepia_matrix = np.array([
         [0.272, 0.534, 0.131],
         [0.349, 0.686, 0.168],
-        [0.393, 0.769, 0.189]
+        [0.693, 1.469, 0.289]
     ])
 
     sepia_img = cv2.transform(img, sepia_matrix)
@@ -70,3 +70,4 @@ if __name__ == "__main__":
     sepia_filter(image, "final_output_sepia.jpg")
     negative_filter(image, "final_output_negative.jpg")
     oil_paint_effect_fast(image, "final_output_oilpaint.jpg")
+
