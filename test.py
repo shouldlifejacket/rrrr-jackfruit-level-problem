@@ -35,6 +35,14 @@ def sketch_filter(img,intensity):
     sketch = c.bitwise_and(d,d, mask=e)
     return sketch
 
+def Black_White(img, intensity):
+    gray = c.cvtColor(img, c.COLOR_BGR2GRAY)
+    
+    thresh_val = 137 - int(intensity * 30)
+    
+    trash_val, result = c.threshold(gray, thresh_val, 255, c.THRESH_BINARY) 
+    
+    return result
             
 
     
