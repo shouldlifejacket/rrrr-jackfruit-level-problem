@@ -20,6 +20,21 @@ def cartoonify(img,intensity):
     cartoon = c.bitwise_and(adaptive, adaptive, mask = fil)
     return cartoon
 
+def sketch_filter(img,intensity):
+    image = img 
+
+    g = c.cvtColor(image, c.COLOR_BGR2GRAY)
+    g = c.medianBlur(g, 5)
+
+    max_val = 255+intensity*100
+    e = c.adaptiveThreshold(g, max_val, c.ADAPTIVE_THRESH_MEAN_C,
+                            c.THRESH_BINARY, 9, 9)
+
+    d = c.bilateralFilter(image, 9, 350, 350) 
+    
+    sketch = c.bitwise_and(d,d, mask=e)
+    return sketch
+
             
 
     
