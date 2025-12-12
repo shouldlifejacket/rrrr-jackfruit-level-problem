@@ -2,6 +2,12 @@ import cv2
 import numpy as np
 from PIL import Image, ImageFilter
 
+def resize_image(input_path, output_path, new_width, new_height):
+    img = Image.open(input_path)
+    img = img.resize((new_width, new_height), Image.LANCZOS)  # high-quality downscale
+    img.save(output_path)
+    return output_path
+    
 def show_histogram(img_path):
     import matplotlib.pyplot as plt
     
@@ -27,7 +33,7 @@ def sepia_filter(img_path, output_path):
         [0.349, 0.686, 0.168],
         [0.693, 1.469, 0.289]
     ])
-
+ 
     sepia_img = cv2.transform(img, sepia_matrix)
     sepia_img = np.clip(sepia_img, 0, 255).astype(np.uint8)
 
@@ -65,9 +71,8 @@ def oil_paint_effect_fast(img_path, output_path, radius=3, intensity_levels=32):
 
 # Test Run
 if __name__ == "__main__":
-    image = "image3.jpeg"
+    image = resize_image("image4.jpeg", "small.jpg", 400, 400)
     show_histogram(image)
     sepia_filter(image, "final_output_sepia.jpg")
     negative_filter(image, "final_output_negative.jpg")
     oil_paint_effect_fast(image, "final_output_oilpaint.jpg")
-
