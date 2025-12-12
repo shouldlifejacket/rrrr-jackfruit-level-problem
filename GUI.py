@@ -82,7 +82,7 @@ class MainFrame(wx.Frame):
         ctrl_sizer.Add(wx.StaticText(ctrl_panel, label='Effect:'), 0, wx.LEFT | wx.TOP, 6)
 
         effect = [
-            'None','Negative','Cartoonify','Ascii','Sepia','Oil Paint'
+            'None','Negative','Cartoonify','Sketch Effect','Ascii','Sepia','Oil Paint'
         ]
         self.effect_choice = wx.Choice(ctrl_panel, choices=effect)
         self.effect_choice.SetSelection(0)
@@ -200,7 +200,8 @@ class MainFrame(wx.Frame):
                 result = img
             elif f == "Cartoonify":
                 result = t.cartoonify(img,intensity)
-
+            elif f == "Sketch Effect":
+                result = t.sketch_filter(img,intensity)
             elif f == 'Ascii':
                 result=aT.image_to_ascii(img)
             elif f == 'Negative':
