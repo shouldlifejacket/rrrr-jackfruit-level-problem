@@ -5,7 +5,7 @@ import wx
 import test as t
 import asciiTest as aT
 import Filter_R as JD
-print('Test 1')
+
 def cv_to_wx_bitmap(cv_img, max_size=(400, 300)):
     if cv_img is None:
         return wx.Bitmap(max_size[0], max_size[1])
@@ -32,7 +32,6 @@ def fit_image(img, max_w=400, max_h=300):
 
 
 class MainFrame(wx.Frame):
-    print('Test 2')
     def __init__(self, parent=None):
         super().__init__(parent, title='Image Processor', size=(1000, 650))
 
@@ -82,7 +81,7 @@ class MainFrame(wx.Frame):
         ctrl_sizer.Add(wx.StaticText(ctrl_panel, label='Effect:'), 0, wx.LEFT | wx.TOP, 6)
 
         effect = [
-            'None','Negative','Cartoonify','Sketch Effect','Black&White','Ascii','Sepia','Oil Paint'
+            'None','Negative','Cartoonify','Ascii','Sepia','Oil Paint','Sketch','Black & White'
         ]
         self.effect_choice = wx.Choice(ctrl_panel, choices=effect)
         self.effect_choice.SetSelection(0)
@@ -200,12 +199,14 @@ class MainFrame(wx.Frame):
                 result = img
             elif f == "Cartoonify":
                 result = t.cartoonify(img,intensity)
-            elif f == "Sketch Effect":
-                result = t.sketch_filter(img,intensity)
-            elif f == "Black&White":
-                result = t.Black_White(img,intensity)
+
             elif f == 'Ascii':
-                result=aT.image_to_ascii(img)
+                import numpy as np
+                from PIL import Image
+                pil_img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+                ascii_pil = aT.image_to_ascii(pil_img)
+                result = cv2.cvtColor(np.array(ascii_pil), cv2.COLOR_RGB2BGR)
+                
             elif f == 'Negative':
                 result=JD.negative_filter(img)
             elif f== 'Oil Paint':
@@ -213,6 +214,11 @@ class MainFrame(wx.Frame):
             elif f == 'Sepia':
                 result=JD.sepia_filter(img)
 
+            elif f == 'Sketch':
+                result =t.sketch_filter(img,intensity)
+            elif f == 'Black & White':
+                result =t.Black_White(img,intensity)
+                
             else:
                 result = img
 
@@ -225,12 +231,6 @@ class MainFrame(wx.Frame):
         except Exception as e:
             wx.MessageBox(f'Error applying filter: {e}', 'Error')
         
-
-
-       
-
-
-
 
 if __name__ == '__main__':
     app = wx.App(False)
