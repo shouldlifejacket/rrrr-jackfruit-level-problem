@@ -40,13 +40,27 @@ def sepia_filter(img_path, output_path):
     cv2.imwrite(output_path, sepia_img)
     return sepia_img
 
+def film_filter(img_path, output_path):
+    img = cv2.imread(img_path)
+    
+    film_matrix =np.array([
+        [0.272, 0.534, 0.131],
+        [0.349, 0.686, 0.168],
+        [0.393, 0.769, 0.189]])
+ 
+    film_img = cv2.transform(img, film_matrix)
+    film_img = np.clip(film_img, 0, 255).astype(np.uint8)
+
+    cv2.imwrite(output_path, film_img)
+    return film_img
+
 def negative_filter(img_path, output_path):
     img = cv2.imread(img_path)
     negative_img = 255 - img
     cv2.imwrite(output_path, negative_img)
     return negative_img
 
-def oil_paint_effect_fast(img_path, output_path, radius=3, intensity_levels=32):
+def oil_paint_filter(img_path, output_path, radius=3, intensity_levels=32):
 
     img = cv2.imread(img_path)
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -74,5 +88,6 @@ if __name__ == "__main__":
     image = resize_image("image4.jpeg", "small.jpg", 400, 400)
     show_histogram(image)
     sepia_filter(image, "final_output_sepia.jpg")
+    film_filter(image, "final_output_film.jpg")
     negative_filter(image, "final_output_negative.jpg")
-    oil_paint_effect_fast(image, "final_output_oilpaint.jpg")
+    oil_paint_filter(image, "final_output_oilpaint.jpg")
