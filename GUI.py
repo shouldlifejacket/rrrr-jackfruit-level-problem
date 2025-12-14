@@ -2,7 +2,7 @@
 import os
 import cv2
 import wx
-import test as t
+import cartoonify_b&w as t
 import asciiTest as aT
 import Filter_R as JD
 print('Test 1')
