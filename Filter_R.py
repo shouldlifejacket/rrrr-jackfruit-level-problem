@@ -56,7 +56,8 @@ def film_filter(img,intensity):
     return cv2.addWeighted(img, 1 - intensity, film_img, intensity, 0)
 
 def oil_paint_effect_fast(img, radius=3, intensity_levels=32):
-    
+    new_width,new_height=400,400     
+    img = cv2.resize(img, (new_width, new_height), interpolation=cv2.INTER_LANCZOS4)
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     factor = 256 // intensity_levels
