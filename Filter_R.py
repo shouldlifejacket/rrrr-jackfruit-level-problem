@@ -20,18 +20,18 @@ def show_histogram(img_path):
     plt.show()
 
 def sepia_filter(img):
-    
+        
     
     sepia_matrix = np.array([
         [0.272, 0.534, 0.131],
         [0.349, 0.686, 0.168],
-        [0.393, 0.769, 0.189]
+        [0.693, 1.469, 0.289]
     ])
-
+ 
     sepia_img = cv2.transform(img, sepia_matrix)
     sepia_img = np.clip(sepia_img, 0, 255).astype(np.uint8)
 
-    
+   
     return sepia_img
 
 def negative_filter(img):
@@ -39,8 +39,22 @@ def negative_filter(img):
     negative_img = 255 - img
     return negative_img
 
-def oil_paint_effect_fast(img, radius=3, intensity_levels=32):
 
+def film_filter(img):
+    
+    
+    film_matrix =np.array([
+        [0.272, 0.534, 0.131],
+        [0.349, 0.686, 0.168],
+        [0.393, 0.769, 0.189]])
+ 
+    film_img = cv2.transform(img, film_matrix)
+    film_img = np.clip(film_img, 0, 255).astype(np.uint8)
+
+    
+    return film_img
+
+def oil_paint_effect_fast(img, radius=3, intensity_levels=32):
     
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
@@ -59,6 +73,8 @@ def oil_paint_effect_fast(img, radius=3, intensity_levels=32):
             output[y, x] = colors[np.argmax(counts)]
 
     output_bgr = cv2.cvtColor(output, cv2.COLOR_RGB2BGR)
+    
+    
     
     return output_bgr
 
