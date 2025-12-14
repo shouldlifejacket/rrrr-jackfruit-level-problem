@@ -3,7 +3,7 @@ import os
 import cv2
 import wx
 import cartoonify_b&w as t
-import asciiTest as aT
+import ascii_effect as aT
 import Filter_R as JD
 print('Test 1')
 def cv_to_wx_bitmap(cv_img, max_size=(400, 300)):
