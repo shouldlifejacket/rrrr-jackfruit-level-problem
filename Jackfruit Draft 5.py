@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image
 
 def resize_image(input_path, output_path, new_width, new_height):
     img = Image.open(input_path)
@@ -91,3 +91,4 @@ if __name__ == "__main__":
     film_filter(image, "final_output_film.jpg")
     negative_filter(image, "final_output_negative.jpg")
     oil_paint_filter(image, "final_output_oilpaint.jpg")
+
