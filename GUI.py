@@ -192,26 +192,27 @@ class MainFrame(wx.Frame):
             return
 
         img = self.orig_image.copy()
-        intensity = self.intensity_slider.GetValue() / 50.0
+        int2 = self.intensity_slider.GetValue()/50
+        intensity = self.intensity_slider.GetValue() / 100.0
         f = self.effect_choice.GetStringSelection()
 
         try:
             if f== 'None':
                 result = img
             elif f == "Cartoonify":
-                result = t.cartoonify(img,intensity)
+                result = t.cartoonify(img,int2)
 
             elif f == 'Ascii':
                 result = aT.ascii_art(img)
                 
             elif f == 'Film':
-                result=JD.film_filter(img)
+                result=JD.film_filter(img,intensity)
             elif f == 'Negative':
-                result=JD.negative_filter(img)
+                result=JD.negative_filter(img,intensity)
             elif f== 'Oil Paint':
                 result=JD.oil_paint_effect_fast(img)
             elif f == 'Sepia':
-                result=JD.sepia_filter(img)
+                result=JD.sepia_filter(img,intensity)
 
             elif f == 'Sketch':
                 result =t.sketch_filter(img,intensity)
