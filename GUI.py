@@ -202,11 +202,8 @@ class MainFrame(wx.Frame):
                 result = t.cartoonify(img,intensity)
 
             elif f == 'Ascii':
-                import numpy as np
-                from PIL import Image
-                pil_img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-                ascii_pil = aT.image_to_ascii(pil_img)
-                result = cv2.cvtColor(np.array(ascii_pil), cv2.COLOR_RGB2BGR)
+                result = aT.ascii_art(img)
+                
             elif f == 'Film':
                 result=JD.film_filter(img)
             elif f == 'Negative':
